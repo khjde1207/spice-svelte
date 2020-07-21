@@ -1,5 +1,5 @@
 <script>
-	export let name;
+	// export let name;
 	import {onMount} from 'svelte'
 	import * as utils from './spice-html5/src/utils.js';
 	import * as SpiceHtml5 from './spice-html5/src/main.js';
