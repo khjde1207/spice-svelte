@@ -1,0 +1,7 @@
+/node_modules/
+/public/build/
+/src/spice-html5/
+/src/websockify/
+ 
+.DS_Store
+

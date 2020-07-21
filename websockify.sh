@@ -1,0 +1,1 @@
+[  -d src/websockify ] && src/websockify/websockify 5959 localhost:5900
