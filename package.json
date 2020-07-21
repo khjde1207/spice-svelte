@@ -4,8 +4,8 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    
     "start": "sirv public",
+    "prestart": "src/websockify/websockify.py 5959 localhost:5900 & ",
     "preinstall": "./init.sh"
   },
   "devDependencies": {

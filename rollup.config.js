@@ -43,7 +43,8 @@ export default {
 		// Watch the `public` directory and refresh the
 		// browser on changes when not in production
 		!production && livereload('public'),
-
+		
+		runWebsockify(),
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
 		production && terser()
@@ -52,16 +53,15 @@ export default {
 		clearScreen: false
 	}
 };
-
+function runWebsockify() {
+	require('child_process').spawn('src/websockify/websockify.py', ['5959', 'localhost:5900'], {
+		stdio: ['ignore', 'inherit', 'inherit'],
+		shell: true
+	});
+}
 function serve() {
 	let started = false;
-	(() =>{
-		// src/websockify/websockify 5959 localhost:5900
-		require('child_process').spawn('src/websockify/websockify.py', ['5959', 'localhost:5900'], {
-			stdio: ['ignore', 'inherit', 'inherit'],
-			shell: true
-		});
-	})()
+	
 	return {
 		writeBundle() {
 			if (!started) {
