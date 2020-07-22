@@ -1,0 +1,1 @@
+docker run  -e HOST=0.0.0.0 -p 5000:5000 khjde1207/spice-svelte

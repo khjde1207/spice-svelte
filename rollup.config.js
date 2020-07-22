@@ -44,7 +44,6 @@ export default {
 		// browser on changes when not in production
 		!production && livereload('public'),
 		
-		runWebsockify(),
 		// If we're building for production (npm run build
 		// instead of npm run dev), minify
 		production && terser()
@@ -53,12 +52,7 @@ export default {
 		clearScreen: false
 	}
 };
-function runWebsockify() {
-	require('child_process').spawn('src/websockify/websockify.py', ['5959', 'localhost:5900'], {
-		stdio: ['ignore', 'inherit', 'inherit'],
-		shell: true
-	});
-}
+
 function serve() {
 	let started = false;
 	

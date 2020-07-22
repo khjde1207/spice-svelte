@@ -1,14 +1,27 @@
 <script>
 	// export let name;
+	
 	import {onMount} from 'svelte'
 	import * as utils from './spice-html5/src/utils.js';
 	import * as SpiceHtml5 from './spice-html5/src/main.js';
-
-	console.log(utils)
+	// import _ from 'lodash';
+	// 	console.log(_)
+	
 	//, onerror: spice_error, onagent: agent_connected
 	onMount(() => {
-		let sc = new SpiceHtml5.SpiceMainConn({uri: "ws://localhost:5959", screen_id: "spice-screen", password: '' });
-		console.log(sc)
+		let param = new URLSearchParams(location.search)
+		let url = param.get('url') || 'localhost';
+		let port = param.get('port') || '5959';
+		let password = param.get('password') || '';
+		if(url.indexOf('ws') < 0){
+			url = 'ws://'+url;
+		}
+		if(password){
+			let addressurl = location.search.replace(`&password=${password}` , '')
+			history.pushState({}, "", addressurl);
+		}
+		let sc = new SpiceHtml5.SpiceMainConn({uri: url+':'+port, screen_id: "spice-screen", password: password });
+		
 	})
 </script>
 
