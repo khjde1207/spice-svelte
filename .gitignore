@@ -1,6 +1,10 @@
-/node_modules/
-/public/build/
-/static/spice-html5/
-/src/websockify/
-.DS_Store
 
+
+
+.DS_Store
+/node_modules/
+/src/node_modules/@sapper/
+yarn-error.log
+/cypress/screenshots/
+/__sapper__/
+/static/spice-html5/
