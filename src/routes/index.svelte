@@ -1,10 +1,37 @@
 <script >
-	import { onMount } from 'svelte'
+	import { onMount, tick, afterUpdate } from 'svelte'
+	import {writable} from 'svelte/store'
 	import { stores } from '@sapper/app';
 	const { preloading, page, session } = stores();
 	let SpiceHtml5 = null;
+	let domspice; 
+	let sc  = writable({}, (set)=>{
+		console.log('got a subscriber!!'); 
+
+	});
+	sc.subscribe(value =>{
+		console.log("[[[[[[[[[[[[[[[[" , value)
+	})
+	
+	// $: watch(sc);
+	// // $: {
+		
+	// // };
+
+	// async function watch(){
+	// 	if(sc){
+	// 		await tick();
+	// 		console.log(' p[[[[[[[[[[[[[[[[[ >>  ' , sc);
+	// 	}
+	// }
+
+	afterUpdate(async ()=>{
+		await tick()
+		// console.log(domspice.children)
+	})
 	onMount(async () => { 
-		console.log(preloading,  $page.query, session) 
+		
+		// console.log(preloading,  $page.query, session) 
 		const module = await import('/spice-html5/src/main.js');
 		SpiceHtml5 = module;
 		let  {url,port,password,}= $page.query
@@ -19,9 +46,16 @@
 			let addressurl = location.search.replace(`&password=${password}` , '')
 			// history.pushState({}, "", addressurl);
 		}
-		let sc = new SpiceHtml5.SpiceMainConn({uri: url+':'+port, screen_id: "spice-screen", password: password });
-
+		sctmp = new SpiceHtml5.SpiceMainConn({uri: url+':'+port, screen_id: "spice-screen", password: password });
+		await tick();
+		sc.set(sctmp)
+		// Object.assign(sc, sctmp);
+		// console.log(sc)
+		// console.log(sc.display)
+		//display
 		
+		// setTimeout(()=>{
+		// }, 500)
 		// MyComponent = module.default;
 	});
 </script>
@@ -71,6 +105,6 @@
 </svelte:head>
 <main>
 	<div id="spice-area">
-		<div id="spice-screen" class="spice-screen"></div>
+		<div bind:this={domspice} id="spice-screen" class="spice-screen"></div>
 	</div>
 </main>
