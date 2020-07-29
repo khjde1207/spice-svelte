@@ -3,7 +3,7 @@ import fs from 'fs'
 
 // const contents = JSON.stringify(posts.map(post => {
 // 	return {
-// 		title: post.title,
+// 		title: post.title, 
 // 		slug: post.slug
 // 	};
 // }));

@@ -1,65 +1,47 @@
 <script >
-	import { onMount, tick, afterUpdate } from 'svelte'
-	import {writable} from 'svelte/store'
+	import { onMount, tick, afterUpdate , onDestroy} from 'svelte'
 	import { stores } from '@sapper/app';
+	import { Button, Col, Row } from 'sveltestrap';
+	import State from 'deep-state-observer'; 
+	import axios from 'axios'
+
+	let state = {};
+	let subscribers = [];
+
 	const { preloading, page, session } = stores();
 	let SpiceHtml5 = null;
 	let domspice; 
-	let sc  = writable({}, (set)=>{
-		console.log('got a subscriber!!'); 
 
+
+	onDestroy(() => {
+		subscribers.forEach((unsubscribe) => unsubscribe());
 	});
-	sc.subscribe(value =>{
-		console.log("[[[[[[[[[[[[[[[[" , value)
-	})
-	
-	// $: watch(sc);
-	// // $: {
-		
-	// // };
+	async function asdf(){
+		var s = await axios.post('/data/loadscript')
+		console.log(s)
 
-	// async function watch(){
-	// 	if(sc){
-	// 		await tick();
-	// 		console.log(' p[[[[[[[[[[[[[[[[[ >>  ' , sc);
-	// 	}
-	// }
-
-	afterUpdate(async ()=>{
-		await tick()
-		// console.log(domspice.children)
-	})
+	}
 	onMount(async () => { 
 		
-		// console.log(preloading,  $page.query, session) 
-		const module = await import('/spice-html5/src/main.js');
+		const module = await import('/spice-html5/src/main.js'); 
 		SpiceHtml5 = module;
 		let  {url,port,password,}= $page.query
-		// let param = new URLSearchParams(location.search)
-		// let url = param.get('url') || 'localhost';
-		// let port = param.get('port') || '5959';
-		// let password = param.get('password') || '';
+
 		if(url.indexOf('ws') < 0){
 			url = 'ws://'+url;
 		}
 		if(password){ 
 			let addressurl = location.search.replace(`&password=${password}` , '')
-			// history.pushState({}, "", addressurl);
-		}
-		sctmp = new SpiceHtml5.SpiceMainConn({uri: url+':'+port, screen_id: "spice-screen", password: password });
-		await tick();
-		sc.set(sctmp)
-		// Object.assign(sc, sctmp);
-		// console.log(sc)
-		// console.log(sc.display)
-		//display
 		
-		// setTimeout(()=>{
-		// }, 500)
-		// MyComponent = module.default;
+		}
+		state = new SpiceHtml5.SpiceMainConn({uri: url+':'+port, screen_id: "spice-screen", password: password });
+		 
+		
+		asdf();
+
 	});
 </script>
-
+ 
 <style>
 	#spice-area
 	{ 
@@ -102,9 +84,17 @@
 
 <svelte:head>
 	<title>Sapper </title>
-</svelte:head>
-<main>
-	<div id="spice-area">
-		<div bind:this={domspice} id="spice-screen" class="spice-screen"></div>
-	</div>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</svelte:head> 
+<main> 
+	<Row>
+		<Col>
+			<div id="spice-area">
+				<div bind:this={domspice} id="spice-screen" class="spice-screen"></div>
+			</div>
+		</Col> 
+		<Col>
+			<Button color="primary" outline on:click={asdf} >ReLoadScript</Button>
+		</Col>
+	</Row>  
 </main>
