@@ -8,6 +8,9 @@
 	let state = {};
 	let subscribers = [];
 
+	let Messages = {};
+	let Constants = {};
+
 	const { preloading, page, session } = stores();
 	let SpiceHtml5 = null;
 	let domspice; 
@@ -17,14 +20,63 @@
 		subscribers.forEach((unsubscribe) => unsubscribe());
 	});
 	async function asdf(){
+		let keydown = new KeyboardEvent('keydown',{type: "keydown", code: "KeyW" , key: "w", keyCode: 87})
+		var key = new Messages.SpiceMsgcKeyDown(keydown)
+		var msg = new Messages.SpiceMiniData();
+		msg.build_msg(Constants.SPICE_MSGC_INPUTS_KEY_DOWN, key); 
+		// console.log(msg, Constants)
+		// state.inputs.send_msg(msg);
+		console.log(state.inputs.state)
+		let keyup = new KeyboardEvent('keyup',{type: "keyup" ,code: "KeyW" , key: "w", keyCode: 87})
+		var key = new Messages.SpiceMsgcKeyDown(keyup)
+		var msg = new Messages.SpiceMiniData();
+		msg.build_msg(Constants.SPICE_MSGC_INPUTS_KEY_UP, key);
+		// check_and_update_modifiers(keydown, key.code, this.sc);
+		state.inputs.send_msg(msg);
+		console.log(msg)
+		
+		// console.log(msg)
+		// msg.build_msg(Constants.SPICE_MSGC_INPUTS_KEY_DOWN, key);
+		// if (this.sc && this.sc.inputs && this.sc.inputs.state === "ready")
+
+// 		code: "KeyW"
+// composed: true
+// ctrlKey: false
+// currentTarget: canvas#spice_surface_0
+// defaultPrevented: false
+// detail: 0
+// eventPhase: 2
+// isComposing: false
+// isTrusted: true
+// key: "w"
+// keyCode: 87
+		// console.log('>>>>>>>: ' , message.SpiceMsgcKeyDown)
 		// var s = await axios.post('/data/loadscript')
+		// var buffer = new ArrayBuffer(4);
+		// var uint8View = new Uint8Array(buffer);
+		// uint8View[0] = 31;
+		// temp1.inputs.send_msg({type: 101 ,size: 4 ,data :buffer})
+		// {type: 101 ,size: 4 ,data :buffer}
 		// console.log(s)
-		console.log(state)
+// 		data: ArrayBuffer(4)
+// [[Int8Array]]: Int8Array(4) [31, 0, 0, 0]
+// [[Int16Array]]: Int16Array(2) [31, 0]
+// [[Int32Array]]: Int32Array [31]
+// [[Uint8Array]]: Uint8Array(4) [31, 0, 0, 0]
+// byteLength: (...)
+// __proto__: ArrayBuffer
+// size: 4
+// type: 101
+		// console.log(state)
 
 	}
-	onMount(async () => { 
+	onMount(async () => {  
 		
 		const module = await import('/spice-html5/src/main.js'); 
+		Messages = await import('/spice-html5/src/spicemsg.js'); 
+		Constants = await import('/spice-html5/src/enums.js'); 
+		Constants = Constants.Constants
+
 		SpiceHtml5 = module;
 		let  {url,port,password,}= $page.query
 
