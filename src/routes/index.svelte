@@ -17,8 +17,9 @@
 		subscribers.forEach((unsubscribe) => unsubscribe());
 	});
 	async function asdf(){
-		var s = await axios.post('/data/loadscript')
-		console.log(s)
+		// var s = await axios.post('/data/loadscript')
+		// console.log(s)
+		console.log(state)
 
 	}
 	onMount(async () => { 
