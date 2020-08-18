@@ -98,19 +98,19 @@
 <style>
 	#spice-area
 	{ 
-		height: 100%;
-		width: 100%;
-		padding: 0;
-		margin-left: auto;
-		margin-right: auto;
-		border: solid #222222 1px;
-		-webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+		/* height: 100%; */
+		/* width: 100%; */
+		/* padding: 0; */
+		/* margin-left: auto;
+		margin-right: auto; */
+		/* border: solid #222222 1px; */
+		/* -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
 		-moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-		box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-		-moz-border-radius: 10px;
-		-webkit-border-radius: 10px;
-		border-radius: 10px;
-		text-align: center;
+		box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2); */
+		/* -moz-border-radius: 10px;
+		-webkit-border-radius: 10px; */
+		/* border-radius: 10px; */
+		/* text-align: center; */
 	}
 	main { 
 		
@@ -150,4 +150,6 @@
 			<Button color="primary" outline on:click={asdf} >ReLoadScript</Button>
 		</Col>
 	</Row>  
+	<Row>
+	</Row>
 </main>
