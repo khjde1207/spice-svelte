@@ -13,7 +13,7 @@
     "preinstall": "[ ! -d src/spice-html5 ] && git clone https://gitlab.freedesktop.org/spice/spice-html5 static/spice-html5 || true"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "compression": "^1.7.1",
     "deep-state-observer": "^3.19.1",
     "polka": "next",
